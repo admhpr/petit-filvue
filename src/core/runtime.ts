@@ -20,26 +20,33 @@ function h(
   }
 }
 
-const vdom = h('div', {class: 'red'}, [h('span', null, 'hello')])
 
-function mount(vnode: VNode, container: HTMLElement){
+function mount(vnode: VNode, container: HTMLElement) {
     const el = document.createElement(vnode.tag)
     // has props
-    if(vnode.props){
-        for(const key in vnode.props){
+    if (vnode.props) {
+        for (const key in vnode.props) {
             const value = vnode.props[key]
             el.setAttribute(key, value)
         }
     }
     // has children
-    if(vnode.children){
-        if(typeof vnode.children === "string"){
+    if (vnode.children) {
+        if (typeof vnode.children === "string") {
             el.textContent = vnode.children
-        }else {
-            vnode.children.forEach(child => {
+        } else {
+            vnode.children.forEach((child) => {
                 mount(child, el)
             })
         }
     }
     container.appendChild(el)
+}
+
+
+const vdom = h('div', {class: 'red'}, [h('span', null, 'hello')])
+const appContainer = document.getElementById("app");
+
+if(appContainer){
+    mount(vdom, appContainer)
 }
