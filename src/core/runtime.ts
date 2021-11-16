@@ -1,12 +1,12 @@
 type Props = {
-    [key: string] : any
-}
+  [key: string]: any;
+};
 
 type VNode = {
-    tag: keyof HTMLElementTagNameMap,
-    props: Props | null,
-    children: VNode[] | string
-}
+  tag: keyof HTMLElementTagNameMap;
+  props: Props | null;
+  children: VNode[] | string;
+};
 
 function h(
   tag: keyof HTMLElementTagNameMap,
@@ -17,36 +17,27 @@ function h(
     tag,
     props,
     children,
-  }
+  };
 }
-
 
 function mount(vnode: VNode, container: HTMLElement) {
-    const el = document.createElement(vnode.tag)
-    // has props
-    if (vnode.props) {
-        for (const key in vnode.props) {
-            const value = vnode.props[key]
-            el.setAttribute(key, value)
-        }
+  const el = document.createElement(vnode.tag);
+  // has props
+  if (vnode.props) {
+    for (const key in vnode.props) {
+      const value = vnode.props[key];
+      el.setAttribute(key, value);
     }
-    // has children
-    if (vnode.children) {
-        if (typeof vnode.children === "string") {
-            el.textContent = vnode.children
-        } else {
-            vnode.children.forEach((child) => {
-                mount(child, el)
-            })
-        }
+  }
+  // has children
+  if (vnode.children) {
+    if (typeof vnode.children === "string") {
+      el.textContent = vnode.children;
+    } else {
+      vnode.children.forEach((child) => {
+        mount(child, el);
+      });
     }
-    container.appendChild(el)
-}
-
-
-const vdom = h('div', {class: 'red'}, [h('span', null, 'hello')])
-const appContainer = document.getElementById("app");
-
-if(appContainer){
-    mount(vdom, appContainer)
+  }
+  container.appendChild(el);
 }
