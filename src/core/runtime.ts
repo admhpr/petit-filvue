@@ -53,16 +53,24 @@ function patch(node1: VNode, node2: VNode) {
       const oldValue = oldProps[key];
       const newValue = newProps[key];
       if (newValue !== oldValue) {
-        if (el) {
-          el.setAttribute(key, newValue);
-        }
+        el!.setAttribute(key, newValue);
       }
     }
     for (const key in oldProps) {
       if (!(key in newProps)) {
-        if (el) {
-          el.removeAttribute(key);
+        el!.removeAttribute(key);
+      }
+    }
+    // children
+    const oldChildren = node1.children;
+    const newChildren = node2.children;
+    if (typeof newChildren === "string") {
+      if (typeof oldChildren === "string") {
+        if (newChildren !== oldChildren) {
+          el!.textContent = newChildren;
         }
+      } else {
+        el!.textContent = newChildren;
       }
     }
   }
