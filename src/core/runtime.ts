@@ -4,6 +4,7 @@ type Props = {
 
 type VNode = {
   tag: keyof HTMLElementTagNameMap;
+  el?: HTMLElement;
   props: Props | null;
   children: VNode[] | string;
 };
@@ -21,7 +22,7 @@ function h(
 }
 
 function mount(vnode: VNode, container: HTMLElement) {
-  const el = document.createElement(vnode.tag);
+  const el = (vnode.el = document.createElement(vnode.tag));
   // has props
   if (vnode.props) {
     for (const key in vnode.props) {
@@ -40,4 +41,13 @@ function mount(vnode: VNode, container: HTMLElement) {
     }
   }
   container.appendChild(el);
+}
+
+function patch(node1: VNode, node2: VNode) {
+  if (node1.tag === node2.tag) {
+    const el = (node2.el = node1.el);
+    // props
+    const oldProps = node1.props || {};
+    const newProps = node2.props || {};
+  }
 }
