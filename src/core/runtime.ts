@@ -58,5 +58,12 @@ function patch(node1: VNode, node2: VNode) {
         }
       }
     }
+    for (const key in oldProps) {
+      if (!(key in newProps)) {
+        if (el) {
+          el.removeAttribute(key);
+        }
+      }
+    }
   }
 }
