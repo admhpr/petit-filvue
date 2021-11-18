@@ -49,5 +49,14 @@ function patch(node1: VNode, node2: VNode) {
     // props
     const oldProps = node1.props || {};
     const newProps = node2.props || {};
+    for (const key in newProps) {
+      const oldValue = oldProps[key];
+      const newValue = newProps[key];
+      if (newValue !== oldValue) {
+        if (el) {
+          el.setAttribute(key, newValue);
+        }
+      }
+    }
   }
 }
