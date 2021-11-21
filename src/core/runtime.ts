@@ -95,5 +95,6 @@ function patch(node1: VNode, node2: VNode) {
       }
     }
   } else {
+    // completely replace element
   }
 }
